@@ -7,6 +7,8 @@ import morgan from 'morgan';
 
 import authRouter from "./routes/auth.js";
 import bookRouter from "./routes/book.js";
+import borrowRouter from "./routes/borrowed.js";
+import verifyToken from "./middleware/verifyToken.js";
 
 const app = express();
 dotenv.config();
@@ -35,4 +37,5 @@ app.get("/api", (req, res) => {
 });
 
 app.use("/api/auth", authRouter);
-app.use("/api/books", bookRouter);
+app.use("/api/books", verifyToken, bookRouter);
+app.use("/api/borrows", verifyToken, borrowRouter);
